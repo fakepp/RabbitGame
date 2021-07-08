@@ -18,6 +18,8 @@ Enter: Given the current configuration of Holes, will make a move.
 
 Delete: Will go back to how the game was before the most recent move.
 
+Escape: Will quit the game.
+
 Grid: 'X' represents where the rabbit could be
       ' ' represents where the rabbit cannot be
       'h' represents the position of hole h currently
