@@ -181,7 +181,6 @@ class Board:
                 exit()
 
             if x in self.nums:
-                print(x)
                 self.control = int(x)
 
             if x == 'U':
