@@ -165,8 +165,26 @@ class Board:
 
 
 
+    def move_hole(self, h, ind1, mv0, mv1):
+        i,j = ind1
 
+        u = i+mv0
+        v = j+mv1
+
+        self.h_locations[h][0] += mv0
+        self.h_locations[h][1] += mv1
         
+        x = self.board[u][v]
+        if x != ' ':
+            if x == 'X':
+                quit()
+            y = int(x)
+            self.h_locations[y][0] -= mv0
+            self.h_locations[y][1] -= mv1
+        
+        swap(self.board, (i,j), (u,v))
+
+
 
     def turn(self):
         self.display()
@@ -186,40 +204,38 @@ class Board:
             if x == 'U':
                 i, j = self.h_locations[self.control]
                 if i >= 1:
-                    if j >= 1:                    
-                        self.h_locations[self.control][0] -= 1
-                        self.h_locations[self.control][1] -= 1
-                        swap(self.board, (i,j), (i-1,j-1))
+                    if j >= 1: 
+
+                        self.move_hole(self.control, (i,j), -1, -1)
+
+
                     elif j <= self.cols-2:                    
-                        self.h_locations[self.control][0] -= 1
-                        self.h_locations[self.control][1] += 1
-                        swap(self.board, (i,j), (i-1,j+1))
+                        self.move_hole(self.control, (i,j), -1, 1)
+
             
             
             if x == 'D':
                 i, j = self.h_locations[self.control]
                 if i <= self.rows-2:
                     if j <= self.cols-2:                    
-                        self.h_locations[self.control][0] += 1
-                        self.h_locations[self.control][1] += 1
-                        swap(self.board, (i,j), (i+1,j+1))
+                        self.move_hole(self.control, (i,j), 1, 1)
+
                     elif j >= 1:                    
-                        self.h_locations[self.control][0] += 1
-                        self.h_locations[self.control][1] -= 1
-                        swap(self.board, (i,j), (i+1,j-1))
+                        self.move_hole(self.control, (i,j), 1, -1)
+
 
 
             if x == 'L':
                 i, j = self.h_locations[self.control]
                 if j >= 2:
-                    self.h_locations[self.control][1] -= 2
-                    swap(self.board, (i,j), (i,j-2))
+                    self.move_hole(self.control, (i,j), 0, -2)
+
 
             if x == 'R':
                 i, j = self.h_locations[self.control]
                 if j <= self.cols-3:
-                    self.h_locations[self.control][1] += 2
-                    swap(self.board, (i,j), (i,j+2))
+                    self.move_hole(self.control, (i,j), 0, 2)
+
 
 
 
@@ -259,6 +275,12 @@ def copy_2(l):
     return l2
 
 
+def quit():
+    print('wtf')
+    exit()
+
+
+
 print('Number of Rows of Board = :')
 rows_num = int(input())
 
@@ -274,4 +296,6 @@ board = Board(rows_num, cols_num, h_num)
 os.system('cls')
 
 board.start()
+
+
 

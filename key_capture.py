@@ -6,7 +6,9 @@ class KeyCapture:
         return
 
     def input(self):
-        key = ord(getch())        
+        key = ord(getch())
+        if key == 3:
+            return 'ESC'
         if key >= 48 and key <= 57:
             return str(key-48)
         if key == 27: #ESC
